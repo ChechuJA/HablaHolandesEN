@@ -85,18 +85,40 @@ class TestAnadirEnYDoblarConsonante(unittest.TestCase):
 class TestComparacionTransformaciones(unittest.TestCase):
     """Tests comparing all three transformation methods"""
     
-    def test_comparar_transformaciones(self):
-        """Compare results of all three methods"""
+    def test_comparar_transformaciones_palabra_consonante(self):
+        """Compare results of all three methods with a word ending in consonant"""
+        palabra = "pan"
+        
+        result1 = quitar_vocal_y_anadir_en(palabra)
+        result2 = siempre_anadir_en(palabra)
+        result3 = anadir_en_y_doblar_consonante(palabra)
+        
+        # All three methods produce different results for words ending in consonants
+        self.assertEqual(result1, "pnen")   # Remove last vowel 'a' -> 'pn' + 'en'
+        self.assertEqual(result2, "panen")  # Just add 'en' -> 'pan' + 'en'
+        self.assertEqual(result3, "pannen") # Double 'n' and add 'en' -> 'pan' + 'n' + 'en'
+        
+        # Verify they're all different
+        self.assertNotEqual(result1, result2)
+        self.assertNotEqual(result2, result3)
+        self.assertNotEqual(result1, result3)
+    
+    def test_comparar_transformaciones_palabra_vocal(self):
+        """Compare results of all three methods with a word ending in vowel"""
         palabra = "libro"
         
         result1 = quitar_vocal_y_anadir_en(palabra)
         result2 = siempre_anadir_en(palabra)
         result3 = anadir_en_y_doblar_consonante(palabra)
         
-        # They should all produce different results
-        self.assertEqual(result1, "libren")
-        self.assertEqual(result2, "libroen")
-        self.assertEqual(result3, "libroen")
+        # For words ending in vowel, methods 2 and 3 produce the same result
+        self.assertEqual(result1, "libren")  # Remove last vowel 'o' -> 'libr' + 'en'
+        self.assertEqual(result2, "libroen") # Just add 'en' -> 'libro' + 'en'
+        self.assertEqual(result3, "libroen") # No doubling, just add 'en' -> 'libro' + 'en'
+        
+        # Verify result1 is different from the others
+        self.assertNotEqual(result1, result2)
+        self.assertEqual(result2, result3)
 
 
 if __name__ == "__main__":
