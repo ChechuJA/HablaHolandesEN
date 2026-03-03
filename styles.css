@@ -286,6 +286,145 @@ h1 {
     font-size: 1.2rem;
 }
 
+/* Joke shop section */
+.tienda-section {
+    background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.8s ease;
+}
+
+.tienda-section h2 {
+    margin-bottom: 0.75rem;
+    font-size: 1.8rem;
+}
+
+.broma-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    vertical-align: middle;
+    letter-spacing: 0.03em;
+}
+
+.tienda-descripcion {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    opacity: 0.95;
+}
+
+.tienda-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.tienda-card {
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    padding: 1.25rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tienda-card:hover {
+    background: rgba(255, 255, 255, 0.22);
+    transform: translateY(-4px);
+}
+
+.tienda-emoji {
+    font-size: 2.5rem;
+}
+
+.tienda-nombre {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.tienda-dutch {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    font-style: italic;
+}
+
+.tienda-desc {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    flex: 1;
+}
+
+.tienda-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.tienda-precio {
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+}
+
+.tienda-calor {
+    opacity: 0.85;
+    font-size: 0.82rem;
+}
+
+.btn-tienda {
+    background: white;
+    color: #dc2626;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.btn-tienda:hover:not(:disabled) {
+    background: #fef2f2;
+    transform: translateY(-2px);
+}
+
+.btn-tienda:disabled {
+    opacity: 0.7;
+    cursor: default;
+}
+
+.carrito-msg {
+    margin-top: 1.25rem;
+    background: rgba(255,255,255,0.18);
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .tienda-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
 footer {
     text-align: center;
     padding: 2rem;
