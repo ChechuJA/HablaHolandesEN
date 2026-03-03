@@ -127,8 +127,105 @@ function transformToModoEN(word) {
     return word + 'EN';
 }
 
+// Joke shop products
+const tiendaProductos = [
+    {
+        emoji: '📺',
+        nombre: 'Estufa de TV Clásica',
+        descripcion: 'Fuego en pantalla HD. Calienta tu corazón pero no tu habitación.',
+        precio: '49,99 €',
+        calor: '0 kcal/h',
+        dutch: 'TV-kachel'
+    },
+    {
+        emoji: '🔥',
+        nombre: 'Estufa de TV Pro 4K',
+        descripcion: 'Llamas en resolución 4K. El frío es el mismo, pero las llamas se ven espectaculares.',
+        precio: '129,99 €',
+        calor: '0 kcal/h',
+        dutch: 'TV-kachel Pro'
+    },
+    {
+        emoji: '🍖',
+        nombre: 'Barbacoa Decorativa',
+        descripcion: 'Asa visualmente tus salchichas. Ideal para dietas estrictas.',
+        precio: '79,99 €',
+        calor: '0 kcal/h',
+        dutch: 'Decoratieve barbecue'
+    },
+    {
+        emoji: '🏕️',
+        nombre: 'Barbacoa de Camping Fake',
+        descripcion: 'Lleva el espíritu del camping a casa. Las brasas son de cartón piedra.',
+        precio: '39,99 €',
+        calor: '0 kcal/h',
+        dutch: 'Nep kampeerbbq'
+    },
+    {
+        emoji: '🕯️',
+        nombre: 'Chimenea de Velas LED',
+        descripcion: 'La experiencia de una chimenea sin el riesgo de incendio ni el calor.',
+        precio: '24,99 €',
+        calor: '0,001 kcal/h',
+        dutch: 'LED-open haard'
+    },
+    {
+        emoji: '🌡️',
+        nombre: 'Termómetro Optimista',
+        descripcion: 'Siempre marca 22°C para que te sientas bien aunque estés helado.',
+        precio: '9,99 €',
+        calor: 'N/A',
+        dutch: 'Optimistische thermometer'
+    }
+];
+
 // Global variables
 let currentFilteredData = [...dictionaryData];
+const PURCHASE_MESSAGE_DURATION = 3500;
+
+// Function to render the joke shop
+function renderTienda() {
+    const container = document.getElementById('tiendaCards');
+    tiendaProductos.forEach(producto => {
+        const card = document.createElement('div');
+        card.className = 'tienda-card';
+        card.innerHTML = `
+            <div class="tienda-emoji">${producto.emoji}</div>
+            <div class="tienda-nombre">${producto.nombre}</div>
+            <div class="tienda-dutch">🇳🇱 ${producto.dutch}</div>
+            <div class="tienda-desc">${producto.descripcion}</div>
+            <div class="tienda-info">
+                <span class="tienda-precio">${producto.precio}</span>
+                <span class="tienda-calor">🌡️ ${producto.calor}</span>
+            </div>
+            <button class="btn btn-tienda">🛒 Comprar</button>
+        `;
+        const btn = card.querySelector('.btn-tienda');
+        btn.addEventListener('click', () => comprar(btn, producto.nombre));
+        container.appendChild(card);
+    });
+}
+
+// Function to handle joke "buy" action
+function comprar(btn, nombre) {
+    const mensajes = [
+        `¡Enhorabuena! Has comprado "${nombre}". El frío sigue siendo tuyo. 🥶`,
+        `"${nombre}" en camino. Recuerda: no enchufarla esperando calor. ❄️`,
+        `Pedido de "${nombre}" confirmado. La calefacción central te lo agradece. 😂`,
+        `¡Excelente elección! "${nombre}" llegará en 3-5 días laborables. El calor, nunca. 🎭`
+    ];
+    const msg = mensajes[Math.floor(Math.random() * mensajes.length)];
+    const carritoMsg = document.getElementById('carritoMsg');
+    carritoMsg.textContent = msg;
+    carritoMsg.style.display = 'block';
+    btn.textContent = '✅ ¡Comprado!';
+    btn.disabled = true;
+    setTimeout(() => {
+        carritoMsg.style.display = 'none';
+        btn.textContent = '🛒 Comprar';
+        btn.disabled = false;
+    }, PURCHASE_MESSAGE_DURATION);
+}
 
 // Function to create a word card
 function createWordCard(wordData) {
@@ -241,6 +338,9 @@ function init() {
     
     // Render initial dictionary
     renderDictionary(dictionaryData);
+    
+    // Render joke shop
+    renderTienda();
     
     // Setup event listeners
     const searchInput = document.getElementById('searchInput');
