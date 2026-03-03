@@ -127,7 +127,53 @@ function transformToModoEN(word) {
     return word + 'EN';
 }
 
-// Joke shop products
+// Function to transform Spanish word to "Modo OF"
+function transformToModoOF(word) {
+    // Remove accents for processing
+    const normalizedWord = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
+    // Find the last vowel in the word
+    const vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+    let lastVowelIndex = -1;
+    
+    for (let i = normalizedWord.length - 1; i >= 0; i--) {
+        if (vowels.includes(normalizedWord[i])) {
+            lastVowelIndex = i;
+            break;
+        }
+    }
+    
+    // If a vowel was found, remove it and add "OF"
+    if (lastVowelIndex !== -1) {
+        // Use the original word (with accents) but remove character at the same position
+        const result = word.substring(0, lastVowelIndex) + word.substring(lastVowelIndex + 1) + 'OF';
+        return result;
+    }
+    
+    // If no vowel found, just add "OF"
+    return word + 'OF';
+}
+
+// Russian dictionary data: Spanish-Russian word pairs
+const russianDictionaryData = [
+    { spanish: 'Hola', russian: 'Привет (Privet)' },
+    { spanish: 'Adiós', russian: 'Пока (Poka)' },
+    { spanish: 'Gracias', russian: 'Спасибо (Spasibo)' },
+    { spanish: 'Por favor', russian: 'Пожалуйста (Pozhaluysta)' },
+    { spanish: 'Sí', russian: 'Да (Da)' },
+    { spanish: 'No', russian: 'Нет (Net)' },
+    { spanish: 'Buenos días', russian: 'Доброе утро (Dobroye utro)' },
+    { spanish: 'Buenas noches', russian: 'Доброй ночи (Dobroy nochi)' },
+    { spanish: 'Casa', russian: 'Дом (Dom)' },
+    { spanish: 'Perro', russian: 'Собака (Sobaka)' },
+    { spanish: 'Gato', russian: 'Кошка (Koshka)' },
+    { spanish: 'Agua', russian: 'Вода (Voda)' },
+    { spanish: 'Comida', russian: 'Еда (Yeda)' },
+    { spanish: 'Libro', russian: 'Книга (Kniga)' },
+    { spanish: 'Amigo', russian: 'Друг (Drug)' },
+    { spanish: 'Familia', russian: 'Семья (Semya)' },
+];
+
 const tiendaProductos = [
     {
         emoji: '📺',
@@ -252,6 +298,44 @@ function createWordCard(wordData) {
     return card;
 }
 
+// Function to create a Russian word card
+function createRussianCard(wordData) {
+    const card = document.createElement('div');
+    card.className = 'word-card';
+    
+    const modoOF = transformToModoOF(wordData.spanish);
+    
+    card.innerHTML = `
+        <div class="word-item">
+            <div class="word-label">🇪🇸 Español</div>
+            <div class="word-value">${wordData.spanish}</div>
+        </div>
+        <div class="word-item">
+            <div class="word-label">🇷🇺 Русский</div>
+            <div class="word-value">${wordData.russian}</div>
+        </div>
+        <div class="word-item">
+            <div class="word-label">✨ Modo OF</div>
+            <div class="word-value en-mode">${modoOF}</div>
+        </div>
+    `;
+    
+    return card;
+}
+
+// Function to render the Russian dictionary
+function renderRussianDictionary() {
+    const container = document.getElementById('russianDictionaryCards');
+    const wordCount = document.getElementById('russianWordCount');
+    wordCount.textContent = `(${russianDictionaryData.length} palabras)`;
+    russianDictionaryData.forEach((wordData, index) => {
+        const card = createRussianCard(wordData);
+        card.style.animationDelay = `${index * 0.05}s`;
+        container.appendChild(card);
+    });
+}
+
+
 // Function to render the dictionary
 function renderDictionary(data) {
     const container = document.getElementById('dictionaryCards');
@@ -341,6 +425,9 @@ function init() {
     
     // Render joke shop
     renderTienda();
+    
+    // Render Russian dictionary
+    renderRussianDictionary();
     
     // Setup event listeners
     const searchInput = document.getElementById('searchInput');

@@ -5,7 +5,8 @@ import unittest
 from habla_holandes import (
     quitar_vocal_y_anadir_en,
     siempre_anadir_en,
-    anadir_en_y_doblar_consonante
+    anadir_en_y_doblar_consonante,
+    quitar_vocal_y_anadir_of
 )
 
 
@@ -80,6 +81,34 @@ class TestAnadirEnYDoblarConsonante(unittest.TestCase):
         """Test words with accented vowels at the end"""
         self.assertEqual(anadir_en_y_doblar_consonante("está"), "estáen")
         self.assertEqual(anadir_en_y_doblar_consonante("café"), "caféen")
+
+
+class TestQuitarVocalYAnadirOf(unittest.TestCase):
+    """Tests for quitar_vocal_y_anadir_of function"""
+    
+    def test_palabra_termina_en_vocal(self):
+        """Test words ending with a vowel"""
+        self.assertEqual(quitar_vocal_y_anadir_of("ruso"), "rusof")
+        self.assertEqual(quitar_vocal_y_anadir_of("casa"), "casof")
+        self.assertEqual(quitar_vocal_y_anadir_of("gato"), "gatof")
+        
+    def test_palabra_termina_en_consonante(self):
+        """Test words ending with a consonant"""
+        self.assertEqual(quitar_vocal_y_anadir_of("sol"), "slof")
+        self.assertEqual(quitar_vocal_y_anadir_of("pan"), "pnof")
+        
+    def test_palabra_con_vocales_acentuadas(self):
+        """Test words with accented vowels"""
+        self.assertEqual(quitar_vocal_y_anadir_of("está"), "estof")
+        self.assertEqual(quitar_vocal_y_anadir_of("música"), "músicof")
+        
+    def test_palabra_vacia(self):
+        """Test empty string"""
+        self.assertEqual(quitar_vocal_y_anadir_of(""), "of")
+        
+    def test_palabra_sin_vocales(self):
+        """Test words without vowels (edge case)"""
+        self.assertEqual(quitar_vocal_y_anadir_of("xyz"), "xyzof")
 
 
 class TestComparacionTransformaciones(unittest.TestCase):

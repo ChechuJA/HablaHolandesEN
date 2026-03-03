@@ -58,6 +58,42 @@ def siempre_anadir_en(palabra):
     return palabra + "en"
 
 
+def quitar_vocal_y_anadir_of(palabra):
+    """
+    Remove the last vowel and add OF.
+    
+    Args:
+        palabra (str): The Spanish word to transform
+        
+    Returns:
+        str: The transformed word
+        
+    Examples:
+        >>> quitar_vocal_y_anadir_of("ruso")
+        'rusof'
+        >>> quitar_vocal_y_anadir_of("casa")
+        'casof'
+    """
+    if not palabra:
+        return "of"
+    
+    vocales = "aeiouAEIOUáéíóúÁÉÍÓÚ"
+    
+    # Find the last vowel position
+    last_vowel_pos = -1
+    for i in range(len(palabra) - 1, -1, -1):
+        if palabra[i] in vocales:
+            last_vowel_pos = i
+            break
+    
+    # If a vowel was found, remove it and add OF
+    if last_vowel_pos != -1:
+        return palabra[:last_vowel_pos] + palabra[last_vowel_pos + 1:] + "of"
+    else:
+        # If no vowel found, just add OF
+        return palabra + "of"
+
+
 def anadir_en_y_doblar_consonante(palabra):
     """
     Add EN and double the final consonant (even more Dutch!).
@@ -99,4 +135,5 @@ if __name__ == "__main__":
         print(f"  1. Quitar vocal + EN: {quitar_vocal_y_anadir_en(palabra)}")
         print(f"  2. Siempre añadir EN: {siempre_anadir_en(palabra)}")
         print(f"  3. Doblar consonante + EN: {anadir_en_y_doblar_consonante(palabra)}")
+        print(f"  4. Quitar vocal + OF: {quitar_vocal_y_anadir_of(palabra)}")
         print()
