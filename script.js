@@ -448,3 +448,60 @@ function init() {
 
 // Start the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', init);
+
+// Popup logic
+(function () {
+    function initPopup() {
+        const overlay = document.getElementById('popupOverlay');
+        const closeBtn = document.getElementById('closePopup');
+        const closeBtnBottom = document.getElementById('closePopupBtn');
+
+        if (!overlay || !closeBtn || !closeBtnBottom) return;
+
+        if (!sessionStorage.getItem('popupSeen')) {
+            overlay.classList.add('active');
+        }
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            sessionStorage.setItem('popupSeen', '1');
+        }
+
+        closeBtn.addEventListener('click', closePopup);
+        closeBtnBottom.addEventListener('click', closePopup);
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closePopup();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPopup);
+    } else {
+        initPopup();
+    }
+})();
+
+// Cookie banner logic
+(function () {
+    function initCookieBanner() {
+        const banner = document.getElementById('cookieBanner');
+        const acceptBtn = document.getElementById('acceptCookies');
+
+        if (!banner || !acceptBtn) return;
+
+        if (!localStorage.getItem('cookiesAccepted')) {
+            banner.classList.add('active');
+        }
+
+        acceptBtn.addEventListener('click', function () {
+            banner.classList.remove('active');
+            localStorage.setItem('cookiesAccepted', '1');
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCookieBanner);
+    } else {
+        initCookieBanner();
+    }
+})();
